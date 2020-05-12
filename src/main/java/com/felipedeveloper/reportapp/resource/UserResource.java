@@ -1,5 +1,6 @@
 package com.felipedeveloper.reportapp.resource;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -9,8 +10,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.felipedeveloper.reportapp.entities.User;
 import com.felipedeveloper.reportapp.services.UserService;
@@ -18,7 +23,7 @@ import com.felipedeveloper.reportapp.services.UserService;
 @RestController
 @RequestMapping(value = "/users")
 public class UserResource {
-	
+
 	@Autowired
 	private UserService userService;
 
@@ -27,16 +32,31 @@ public class UserResource {
 		List<User> user = userService.findAll();
 		return ResponseEntity.ok().body(user);
 	}
-	
+
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<Optional<User>> findById(@PathVariable Long id){
+	public ResponseEntity<Optional<User>> findById(@PathVariable Long id) {
 		Optional<User> obj = userService.findById(id);
 		return ResponseEntity.ok().body(obj);
 	}
-	
+
 	@DeleteMapping(value = "/{id}")
-	public ResponseEntity<Void> deletebyId(@PathVariable Long id){
+	public ResponseEntity<Void> deletebyId(@PathVariable Long id) {
 		userService.deleteById(id);
 		return ResponseEntity.noContent().build();
 	}
+
+	@PostMapping
+	public ResponseEntity<User> insert(@RequestBody User obj) {
+		obj = userService.insert(obj);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
+		return ResponseEntity.created(uri).body(obj);
+	}
+	
+	@PutMapping(value = "/{id}")
+	public ResponseEntity<User> update(@RequestBody User obj, @PathVariable Long id){
+		obj = userService.update(id, obj);
+		return ResponseEntity.ok().body(obj);
+	}
+	
+	
 }
