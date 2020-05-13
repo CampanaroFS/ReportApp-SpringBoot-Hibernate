@@ -6,6 +6,8 @@ import java.time.Instant;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -24,8 +26,11 @@ public class Report implements Serializable {
 	private String content;
 	@JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss", timezone = "America/Sao_Paulo")
 	private Instant date;
-
 	private Integer departmentEnum;
+	
+	@ManyToOne
+	@JoinColumn(name = "User_Id")
+	private User user;
 
 	public Report() {
 	}

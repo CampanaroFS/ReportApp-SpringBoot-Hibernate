@@ -1,12 +1,16 @@
 package com.felipedeveloper.reportapp.entities;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "User_tb")
@@ -22,6 +26,10 @@ public class User implements Serializable {
 	private String position;
 	private Integer registrationNumber;
 	private String password;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "user")
+	private List<Report> report;
 	
 	public User() { 
 	}
