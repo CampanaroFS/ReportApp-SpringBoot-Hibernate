@@ -56,7 +56,6 @@ public class UserResource {
 	public ResponseEntity<User> update(@RequestBody User obj, @PathVariable Long id){
 		obj = userService.update(id, obj);
 		return ResponseEntity.ok().body(obj);
-	}
-	
+	}	
 	
 }
