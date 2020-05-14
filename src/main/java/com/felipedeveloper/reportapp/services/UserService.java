@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.felipedeveloper.reportapp.entities.User;
 import com.felipedeveloper.reportapp.repositories.UserRepository;
+import com.felipedeveloper.reportapp.services.exception.ResourceNotFoundException;
 
 @Service
 public class UserService {
@@ -19,9 +20,9 @@ public class UserService {
 		return userRepository.findAll();
 	}
 	
-	public Optional<User> findById(Long id) {
+	public User findById(Long id) {
 		Optional<User> obj = userRepository.findById(id);
-		return obj;
+		return obj.orElseThrow(() -> new ResourceNotFoundException(id));
 	}
 	
 	public void deleteById(Long id) {

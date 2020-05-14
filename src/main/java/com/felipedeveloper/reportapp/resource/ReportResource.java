@@ -52,7 +52,7 @@ public class ReportResource {
 	}
 	
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<Report> update(@RequestBody Report obj, Long id){
+	public ResponseEntity<Report> update(@RequestBody Report obj, @PathVariable Long id){
 		obj = reportService.update(id, obj);
 		return ResponseEntity.ok().body(obj);
 	}

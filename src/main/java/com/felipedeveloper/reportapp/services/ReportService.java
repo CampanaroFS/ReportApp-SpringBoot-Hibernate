@@ -36,6 +36,7 @@ public class ReportService {
 	public Report update(Long id, Report obj) {
 		Report report = reportRepository.getOne(id);
 		report.setSubject(obj.getSubject());
+		report.setContent(obj.getContent());
 
 		return reportRepository.save(report);
 	}
