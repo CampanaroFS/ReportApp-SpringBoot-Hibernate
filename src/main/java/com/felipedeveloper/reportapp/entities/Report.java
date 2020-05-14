@@ -22,7 +22,7 @@ public class Report implements Serializable {
 
 	@Id
 	@GeneratedValue
-	private Integer id;
+	private Long id;
 	private String subject;
 	private String content;
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss'T'HH:mm:ss'Z'", timezone = "America/Sao_Paulo")
@@ -37,7 +37,7 @@ public class Report implements Serializable {
 	public Report() {
 	}
 
-	public Report(Integer id, Instant date, ProcessEnum processEnum, DepartmentEnum departmentEnum, String subject, String content, User user) {
+	public Report(Long id, Instant date, ProcessEnum processEnum, DepartmentEnum departmentEnum, String subject, String content, User user) {
 		super();
 		this.id = id;
 		this.date = date;
@@ -48,11 +48,11 @@ public class Report implements Serializable {
 		this.user = user;
 	}
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

@@ -4,10 +4,13 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.felipedeveloper.reportapp.entities.Report;
 import com.felipedeveloper.reportapp.repositories.ReportRepository;
+import com.felipedeveloper.reportapp.services.exception.ResourceNotFoundException;
 
+@Service
 public class ReportService {
 
 	@Autowired
@@ -17,9 +20,9 @@ public class ReportService {
 		return reportRepository.findAll();
 	}
 
-	public Optional<Report> findById(Long id) {
+	public Report findById(Long id) {
 		Optional<Report> obj = reportRepository.findById(id);
-		return obj;
+		return obj.orElseThrow(() -> new ResourceNotFoundException(id));
 	}
 
 	public void deleteById(Long id) {
