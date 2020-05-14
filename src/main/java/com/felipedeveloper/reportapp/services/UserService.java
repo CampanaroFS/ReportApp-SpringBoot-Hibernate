@@ -13,38 +13,33 @@ import com.felipedeveloper.reportapp.repositories.UserRepository;
 public class UserService {
 	
 	@Autowired
-	private UserRepository repository;
+	private UserRepository userRepository;
 	
 	public List<User> findAll(){
-		return repository.findAll();
+		return userRepository.findAll();
 	}
 	
 	public Optional<User> findById(Long id) {
-		Optional<User> obj = repository.findById(id);
+		Optional<User> obj = userRepository.findById(id);
 		return obj;
 	}
 	
 	public void deleteById(Long id) {
-		repository.deleteById(id);
+		userRepository.deleteById(id);
 	}
 	
 	public User insert(User obj) {
-		return repository.save(obj);
+		return userRepository.save(obj);
 	}
 	
 	public User update(Long id, User obj) {
-		User user = repository.getOne(id);
+		User user = userRepository.getOne(id);
 		user.setName(obj.getName());
 		user.setEmail(obj.getEmail());
 		user.setPosition(obj.getPosition());
 		user.setRegistrationNumber(obj.getRegistrationNumber());
 		user.setPassword(obj.getPassword());
 		
-		return repository.save(user);
+		return userRepository.save(user);
 	}
-	
-	public void delete(Long id) {
-		repository.deleteById(id);
-	}
-
 }

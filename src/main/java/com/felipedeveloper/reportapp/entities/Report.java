@@ -12,6 +12,7 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.felipedeveloper.reportapp.entities.enums.DepartmentEnum;
+import com.felipedeveloper.reportapp.entities.enums.ProcessEnum;
 
 @Entity
 @Table(name = "MaintenanceReport_tb")
@@ -24,9 +25,10 @@ public class Report implements Serializable {
 	private Integer id;
 	private String subject;
 	private String content;
-	@JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss", timezone = "America/Sao_Paulo")
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss'T'HH:mm:ss'Z'", timezone = "America/Sao_Paulo")
 	private Instant date;
 	private Integer departmentEnum;
+	private Integer processEnum;
 	
 	@ManyToOne
 	@JoinColumn(name = "User_Id")
@@ -35,13 +37,15 @@ public class Report implements Serializable {
 	public Report() {
 	}
 
-	public Report(Integer id, Instant date, DepartmentEnum departmentEnum, String subject, String content) {
+	public Report(Integer id, Instant date, ProcessEnum processEnum, DepartmentEnum departmentEnum, String subject, String content, User user) {
 		super();
 		this.id = id;
 		this.date = date;
+		setProcessEnum(processEnum);
 		setDepartmentEnum(departmentEnum);
 		this.subject = subject;
 		this.content = content;
+		this.user = user;
 	}
 
 	public Integer getId() {
@@ -85,6 +89,23 @@ public class Report implements Serializable {
 			this.departmentEnum = departmentEnum.getCode();
 		}
 	}
+	
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+	
+	public Integer getProcessEnum() {
+		return processEnum;
+	}
+
+	public void setProcessEnum(ProcessEnum processEnum) {
+		this.processEnum = processEnum.getCode();
+	}
+
 
 	@Override
 	public int hashCode() {
@@ -110,5 +131,4 @@ public class Report implements Serializable {
 			return false;
 		return true;
 	}
-
 }
