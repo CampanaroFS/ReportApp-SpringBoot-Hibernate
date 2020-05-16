@@ -5,9 +5,11 @@ import java.time.Instant;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -21,7 +23,7 @@ public class Report implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String subject;
 	private String content;
@@ -33,11 +35,15 @@ public class Report implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "User_Id")
 	private User user;
+	
+	@OneToOne
+	@JoinColumn(name = "Equipment_Id")
+	private Equipment equipment;
 
 	public Report() {
 	}
 
-	public Report(Long id, Instant date, ProcessEnum processEnum, DepartmentEnum departmentEnum, String subject, String content, User user) {
+	public Report(Long id, Instant date, ProcessEnum processEnum, DepartmentEnum departmentEnum, String subject, String content, User user, Equipment equipment) {
 		super();
 		this.id = id;
 		this.date = date;
@@ -46,6 +52,7 @@ public class Report implements Serializable {
 		this.subject = subject;
 		this.content = content;
 		this.user = user;
+		this.equipment = equipment;
 	}
 
 	public Long getId() {
@@ -80,8 +87,8 @@ public class Report implements Serializable {
 		this.date = date;
 	}
 
-	public Integer getDepartmentEnum() {
-		return departmentEnum;
+	public DepartmentEnum getDepartmentEnum() {
+		return DepartmentEnum.valueOf(departmentEnum);
 	}
 
 	public void setDepartmentEnum(DepartmentEnum departmentEnum) {
@@ -98,14 +105,21 @@ public class Report implements Serializable {
 		this.user = user;
 	}
 	
-	public Integer getProcessEnum() {
-		return processEnum;
+	public ProcessEnum getProcessEnum() {
+		return ProcessEnum.valueOf(processEnum);
 	}
 
 	public void setProcessEnum(ProcessEnum processEnum) {
 		this.processEnum = processEnum.getCode();
 	}
 
+	public Equipment getEquipment() {
+		return equipment;
+	}
+
+	public void setEquipment(Equipment equipment) {
+		this.equipment = equipment;
+	}
 
 	@Override
 	public int hashCode() {
