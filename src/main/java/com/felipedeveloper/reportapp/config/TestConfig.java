@@ -18,7 +18,7 @@ import com.felipedeveloper.reportapp.repositories.ReportRepository;
 import com.felipedeveloper.reportapp.repositories.UserRepository;
 
 @Configuration
-@Profile("test")
+@Profile("dev")
 public class TestConfig implements CommandLineRunner {
 	
 	@Autowired
