@@ -1,4 +1,4 @@
-# ReportApp-SpringBoot-Hibernate
+# ReportApp-SpringBoot-JPA/Hibernate
 
 https://reportappspringboot.herokuapp.com/
 
